@@ -1,0 +1,36 @@
+{% extends "base_login.html" %}
+{% load static %}
+
+{% block contenido %}
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <h1 class="section-title position-relative text-center mb-5">Iniciar sesión</h1>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="contact-form bg-light rounded p-5">
+                    <div id="success"></div>
+                    <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                        <div class="form-row d-flex justify-content-center">
+                            <div class="col-8 control-group">
+                                <input type="text" class="form-control p-4" id="name" placeholder="Usuario" required="required" data-validation-required-message="Por favor ingresa tu usuario" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="col-8 control-group">
+                                <input type="email" class="form-control p-4" id="email" placeholder="Contraseña" required="required" data-validation-required-message="Por favor ingresa tu Contraseña" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="form-row d-flex justify-content-center">
+                            <button class="btn btn-primary btn-block py-3 px-5 col-8 control-group" type="submit" id="sendMessageButton">Iniciar sesión</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}
