@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block  contenido_Index %}
+
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <h1 class="section-title position-relative text-center mb-5">Lista de Facturas</h1>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="bg-light rounded p-5">
+                    <div id="success"></div>
+                    <div class="invoice-list">
+                        <div class="invoice-item p-3 mb-3 border rounded">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <strong>Código:</strong> INV002
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Nombre de la Empresa:</strong> Empresa XYZ
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Contacto:</strong> pollitosfelices@gmail.com
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Total:</strong> $2500
+                                </div>
+                            </div>
+                        </div>
+                        <div class="invoice-item p-3 mb-3 border rounded">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <strong>Código:</strong> INV002
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Nombre de la Empresa:</strong> Empresa XYZ
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Contacto:</strong> gatitosfelices@gmail.com
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Total:</strong> $2500
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Puedes duplicar esta estructura para más facturas -->
+                    </div>
+                    <div class="form-row d-flex justify-content-center mt-4">
+                        <a href="otra_pagina.html" class="btn btn-primary btn-block py-3 px-5 col-4 control-group">Agregar factura</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock contenido_Index  %}
