@@ -8,3 +8,6 @@ def login(request):
 
 def index(request):
     return render(request, "index.html")
+
+def factura(request):
+    return render(request, "factura.html")

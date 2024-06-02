@@ -22,4 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', login, name="login"),
     path('index/', index, name="index"),
+    path('factura/', factura, name="factura"),
+
 ]
