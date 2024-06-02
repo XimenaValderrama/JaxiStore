@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block contenido %}
+
+<div class="containerfactura-fluid py-5">
+    <div class="containerfactura py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <h1 class="section-title position-relative text-center mb-5">Orden de compra</h1>
+            </div>
+            <div class="col-lg-9">
+                <div class="order-card bg-light rounded p-5">
+                    <div class="row text-center mb-5">   
+                        <div class="col-lg-4">
+                            <label>Fecha: </label>
+                            <input type="date" class="form-control" id="fecha" required />
+                        </div>
+                        <div class="col-lg-4"> 
+                            <label>Nº de orden: </label>
+                            <input type="text" class="form-control" id="orden" required />
+                        </div>
+                    </div>
+
+                    <div class="info">
+                        <div class="section">
+                            <h3>Datos del proveedor</h3>
+                            <div>
+                                <label>Nombre o razón social: </label>
+                                <input type="text" class="form-control" id="nombre_proveedor" required />
+                            </div>
+                            <div>
+                                <label>CUIT: </label>
+                                <input type="text" class="form-control" id="cuit_proveedor" required />
+                            </div>
+                            <div>
+                                <label>Dirección: </label>
+                                <input type="text" class="form-control" id="direccion_proveedor" required />
+                            </div>
+                            <div>
+                                <label>Teléfono: </label>
+                                <input type="text" class="form-control" id="telefono_proveedor" required />
+                            </div>
+                            <div>
+                                <label>Correo electrónico: </label>
+                                <input type="email" class="form-control" id="email_proveedor" required />
+                            </div>
+                        </div>
+                        <div class="section">
+                            <h3>Datos del cliente</h3>
+                            <div>
+                                <label>Nombre o razón social: </label>
+                                <input type="text" class="form-control" id="nombre_cliente" required />
+                            </div>
+                            <div>
+                                <label>CUIT: </label>
+                                <input type="text" class="form-control" id="cuit_cliente" required />
+                            </div>
+                            <div>
+                                <label>Dirección: </label>
+                                <input type="text" class="form-control" id="direccion_cliente" required />
+                            </div>
+                            <div>
+                                <label>Teléfono: </label>
+                                <input type="text" class="form-control" id="telefono_cliente" required />
+                            </div>
+                            <div>
+                                <label>Correo electrónico: </label>
+                                <input type="email" class="form-control" id="email_cliente" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="order-details">
+                        <thead>
+                        <tr>
+                            <th>Ref.</th>
+                            <th>Descripción</th>
+                            <th>Cantidad</th>
+                            <th>Precio unitario</th>
+                            <th>Precio total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><input type="text" class="form-control" id="ref1" required /></td>
+                            <td><input type="text" class="form-control" id="descripcion1" required /></td>
+                            <td><input type="number" class="form-control" id="cantidad1" required /></td>
+                            <td><input type="number" class="form-control" id="precio_unitario1" required /></td>
+                            <td><input type="number" class="form-control" id="precio_total1" required /></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="form-control" id="ref2" required /></td>
+                            <td><input type="text" class="form-control" id="descripcion2" required /></td>
+                            <td><input type="number" class="form-control" id="cantidad2" required /></td>
+                            <td><input type="number" class="form-control" id="precio_unitario2" required /></td>
+                            <td><input type="number" class="form-control" id="precio_total2" required /></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="form-control" id="ref3" required /></td>
+                            <td><input type="text" class="form-control" id="descripcion3" required /></td>
+                            <td><input type="number" class="form-control" id="cantidad3" required /></td>
+                            <td><input type="number" class="form-control" id="precio_unitario3" required /></td>
+                            <td><input type="number" class="form-control" id="precio_total3" required /></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="totals d-flex justify-content-end flex-column align-items-end">
+                        <div class="col-lg-4 d-flex justify-content-end">
+                            <label>Total pedido: </label>
+                            <input type="number" class="form-control bg-white" id="total_pedido" readonly />
+                        </div>
+                        <div class="col-lg-4 d-flex justify-content-end"> 
+                            <label>IVA 19%: </label>
+                            <input type="number" class="form-control bg-white" id="envio" readonly />
+                        </div>
+                        <div class="col-lg-4 d-flex justify-content-end">
+                            <label>Total a pagar: </label>
+                            <input type="number" class="form-control bg-white" id="total_pagar" readonly />
+                        </div>
+                    </div>
+
+                    <div class="footer">
+                        <div class="section">
+                            <label>Fecha de entrega: </label>
+                            <input type="date" class="form-control" id="fecha_entrega" required />
+                            <label>Dirección de entrega: </label>
+                            <input type="text" class="form-control" id="direccion_entrega" required />
+                        </div>
+                        <div class="section signature">
+                            <label>Firma del receptor: </label>
+                            <input type="text" class="form-control" id="firma_receptor" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-end mt-8 mr-5">
+            <a href="otra_pagina.html" class="btn btn-primary btn-block py-3 px-5 col-3 control-group">Aceptar</a>
+        </div>
+    </div>
+    
+</div>
+
+
+{% endblock contenido %}
