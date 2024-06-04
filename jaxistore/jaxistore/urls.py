@@ -20,8 +20,9 @@ from web.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', login, name="login"),
+    path('', inicio_sesion, name="login"),
     path('index/', index, name="index"),
     path('factura/', factura, name="factura"),
+    path('cerrar-sesion', cerrar_sesion, name="cerrar_sesion"),
 
 ]
