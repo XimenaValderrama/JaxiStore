@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class orden_compra(models.Model):
+class OrdenCompra(models.Model):
     id_orden_compra = models.AutoField(primary_key=True)
     fecha = models.DateField(auto_now_add=True)
     nombre_proveedor = models.CharField(max_length=100)
@@ -26,7 +26,7 @@ class orden_compra(models.Model):
     fecha_entrega = models.DateField()
     productos = models.ManyToManyField('producto')
 
-class producto (models.Model):
+class Producto(models.Model):
     id_producto = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100)
     cantidad = models.IntegerField()
