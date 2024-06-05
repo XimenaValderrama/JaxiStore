@@ -32,4 +32,5 @@ def index(request):
 
 @login_required(login_url="login")
 def factura(request):
+    
     return render(request, "factura.html")

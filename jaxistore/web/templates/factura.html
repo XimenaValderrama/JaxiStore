@@ -9,13 +9,11 @@
             <div class="col-lg-6">
                 <h1 class="section-title position-relative text-center mb-5">Orden de compra</h1>
             </div>
-            <div class="col-lg-9">
+            <form action="" method="POST">
+            {% csrf_token %}
+            <div class="col-lg-12">
                 <div class="order-card bg-light rounded p-5">
                     <div class="row text-center mb-5">   
-                        <div class="col-lg-4">
-                            <label>Fecha: </label>
-                            <input type="date" class="form-control" id="fecha" required />
-                        </div>
                         <div class="col-lg-4"> 
                             <label>Nº de orden: </label>
                             <input type="text" class="form-control" id="orden" required />
@@ -27,46 +25,46 @@
                             <h3>Datos del proveedor</h3>
                             <div>
                                 <label>Nombre o razón social: </label>
-                                <input type="text" class="form-control" id="nombre_proveedor" required />
+                                <input type="text" name="proveedor" class="form-control" id="nombre_proveedor" required />
                             </div>
                             <div>
                                 <label>CUIT: </label>
-                                <input type="text" class="form-control" id="cuit_proveedor" required />
+                                <input type="text" name="cuit_proveedor" class="form-control" id="cuit_proveedor" required />
                             </div>
                             <div>
                                 <label>Dirección: </label>
-                                <input type="text" class="form-control" id="direccion_proveedor" required />
+                                <input type="text" name="direccion_proveedor" class="form-control" id="direccion_proveedor" required />
                             </div>
                             <div>
                                 <label>Teléfono: </label>
-                                <input type="text" class="form-control" id="telefono_proveedor" required />
+                                <input type="text" name="telefono_proveedor" class="form-control" id="telefono_proveedor" required />
                             </div>
                             <div>
                                 <label>Correo electrónico: </label>
-                                <input type="email" class="form-control" id="email_proveedor" required />
+                                <input type="email" name="correo_proveedor" class="form-control" id="email_proveedor" required />
                             </div>
                         </div>
                         <div class="section">
                             <h3>Datos del cliente</h3>
                             <div>
                                 <label>Nombre o razón social: </label>
-                                <input type="text" class="form-control" id="nombre_cliente" required />
+                                <input type="text" name="cliente" class="form-control" id="nombre_cliente" required />
                             </div>
                             <div>
                                 <label>CUIT: </label>
-                                <input type="text" class="form-control" id="cuit_cliente" required />
+                                <input type="text" name="cuit_cliente" class="form-control" id="cuit_cliente" required />
                             </div>
                             <div>
                                 <label>Dirección: </label>
-                                <input type="text" class="form-control" id="direccion_cliente" required />
+                                <input type="text" name="direccion_cliente" class="form-control" id="direccion_cliente" required />
                             </div>
                             <div>
                                 <label>Teléfono: </label>
-                                <input type="text" class="form-control" id="telefono_cliente" required />
+                                <input type="text" name="telefono_cliente" class="form-control" id="telefono_cliente" required />
                             </div>
                             <div>
                                 <label>Correo electrónico: </label>
-                                <input type="email" class="form-control" id="email_cliente" required />
+                                <input type="email" name="correo_cliente" class="form-control" id="email_cliente" required />
                             </div>
                         </div>
                     </div>
@@ -74,8 +72,26 @@
                     <table class="order-details">
                         <thead>
                         <tr>
-                            <th>Ref.</th>
-                            <th>Descripción</th>
+                            <th>Rut transporte</th>
+                            <th>Patente</th>
+                            <th>Rut chofer</th>
+                            <th>Nombre chofer</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><input type="text" name="rut_transporte" class="form-control" id="ref1" required /></td>
+                            <td><input type="text" name="patente" class="form-control" id="descripcion1" required /></td>
+                            <td><input type="number" name="rut_chofer" class="form-control" id="cantidad1" required /></td>
+                            <td><input type="number" name="chofer" class="form-control" id="precio_unitario1" required /></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    
+                    <table class="order-details">
+                        <thead>
+                        <tr>
+                            <th>Producto</th>
                             <th>Cantidad</th>
                             <th>Precio unitario</th>
                             <th>Precio total</th>
@@ -83,28 +99,16 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td><input type="text" class="form-control" id="ref1" required /></td>
-                            <td><input type="text" class="form-control" id="descripcion1" required /></td>
-                            <td><input type="number" class="form-control" id="cantidad1" required /></td>
-                            <td><input type="number" class="form-control" id="precio_unitario1" required /></td>
-                            <td><input type="number" class="form-control" id="precio_total1" required /></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" class="form-control" id="ref2" required /></td>
-                            <td><input type="text" class="form-control" id="descripcion2" required /></td>
-                            <td><input type="number" class="form-control" id="cantidad2" required /></td>
-                            <td><input type="number" class="form-control" id="precio_unitario2" required /></td>
-                            <td><input type="number" class="form-control" id="precio_total2" required /></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" class="form-control" id="ref3" required /></td>
-                            <td><input type="text" class="form-control" id="descripcion3" required /></td>
-                            <td><input type="number" class="form-control" id="cantidad3" required /></td>
-                            <td><input type="number" class="form-control" id="precio_unitario3" required /></td>
-                            <td><input type="number" class="form-control" id="precio_total3" required /></td>
+                            <td><input type="text" name="producto" class="form-control" id="descripcion1" required /></td>
+                            <td><input type="number" name="cantidad" class="form-control" id="cantidad1" required /></td>
+                            <td><input type="number" name="precio" class="form-control" id="precio_unitario1" required /></td>
+                            <td><input type="number" name="total" class="form-control" id="precio_total1" required /></td>
                         </tr>
                         </tbody>
                     </table>
+                    <div class="form-row d-flex justify-content-center">
+                        <button class="btn btn-primary btn-block py-3 px-5 col-3 control-group" type="submit" id="sendMessageButton">Agregar producto</button>
+                    </div>
 
                     <div class="totals d-flex justify-content-end flex-column align-items-end">
                         <div class="col-lg-4 d-flex justify-content-end">
@@ -121,19 +125,24 @@
                         </div>
                     </div>
 
+                    <h4>Forma de pago</h4>
+                    <select name="forma_pago" class="form-select" aria-label="Default select example">
+                        <option selected>Seleccionar</option>
+                        <option value="1">Debito</option>
+                        <option value="2">Credito</option>
+                    </select>
+                      
+
                     <div class="footer">
                         <div class="section">
                             <label>Fecha de entrega: </label>
-                            <input type="date" class="form-control" id="fecha_entrega" required />
+                            <input type="date" name="entrega" class="form-control" id="fecha_entrega" required />
                             <label>Dirección de entrega: </label>
-                            <input type="text" class="form-control" id="direccion_entrega" required />
-                        </div>
-                        <div class="section signature">
-                            <label>Firma del receptor: </label>
-                            <input type="text" class="form-control" id="firma_receptor" required />
+                            <input type="text" name="direccion_entrega" class="form-control" id="direccion_entrega" required />
                         </div>
                     </div>
                 </div>
+            </form>
             </div>
         </div>
         <div class="form-row d-flex justify-content-end mt-8 mr-5">
