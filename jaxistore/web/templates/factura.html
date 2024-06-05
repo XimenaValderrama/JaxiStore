@@ -10,147 +10,181 @@
                 <h1 class="section-title position-relative text-center mb-5">Orden de compra</h1>
             </div>
             <form action="" method="POST">
-            {% csrf_token %}
-            <div class="col-lg-12">
-                <div class="order-card bg-light rounded p-5">
-                    <div class="row text-center mb-5">   
-                        <div class="col-lg-4"> 
-                            <label>Nº de orden: </label>
-                            <input type="text" class="form-control" id="orden" required />
+                {% csrf_token %}
+                <div class="col-lg-12">
+                    <div class="order-card bg-light rounded p-5">
+                        <div class="row text-center mb-5">   
+                            <div class="col-lg-4"> 
+                                <label>Nº de orden: </label>
+                                <input type="text" class="form-control bg-white" id="orden" readonly />
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="info">
-                        <div class="section">
-                            <h3>Datos del proveedor</h3>
-                            <div>
-                                <label>Nombre o razón social: </label>
-                                <input type="text" name="proveedor" class="form-control" id="nombre_proveedor" required />
+                        <div class="info">
+                            <div class="section">
+                                <h3>Datos del proveedor</h3>
+                                <div>
+                                    <label>Nombre o razón social: </label>
+                                    <input type="text" name="nombre_proveedor" class="form-control" id="nombre_proveedor" required />
+                                </div>
+                                <div>
+                                    <label>CUIT: </label>
+                                    <input type="text" name="cuit_proveedor" class="form-control" id="cuit_proveedor" required />
+                                </div>
+                                <div>
+                                    <label>Dirección: </label>
+                                    <input type="text" name="direccion_proveedor" class="form-control" id="direccion_proveedor" required />
+                                </div>
+                                <div>
+                                    <label>Teléfono: </label>
+                                    <input type="text" name="telefono_proveedor" class="form-control" id="telefono_proveedor" required />
+                                </div>
+                                <div>
+                                    <label>Correo electrónico: </label>
+                                    <input type="email" name="correo_proveedor" class="form-control" id="email_proveedor" required />
+                                </div>
                             </div>
-                            <div>
-                                <label>CUIT: </label>
-                                <input type="text" name="cuit_proveedor" class="form-control" id="cuit_proveedor" required />
-                            </div>
-                            <div>
-                                <label>Dirección: </label>
-                                <input type="text" name="direccion_proveedor" class="form-control" id="direccion_proveedor" required />
-                            </div>
-                            <div>
-                                <label>Teléfono: </label>
-                                <input type="text" name="telefono_proveedor" class="form-control" id="telefono_proveedor" required />
-                            </div>
-                            <div>
-                                <label>Correo electrónico: </label>
-                                <input type="email" name="correo_proveedor" class="form-control" id="email_proveedor" required />
+                            <div class="section">
+                                <h3>Datos del cliente</h3>
+                                <div>
+                                    <label>Nombre o razón social: </label>
+                                    <input type="text" name="nombre_cliente" class="form-control" id="nombre_cliente" required />
+                                </div>
+                                <div>
+                                    <label>CUIT: </label>
+                                    <input type="text" name="cuit_cliente" class="form-control" id="cuit_cliente" required />
+                                </div>
+                                <div>
+                                    <label>Dirección: </label>
+                                    <input type="text" name="direccion_cliente" class="form-control" id="direccion_cliente" required />
+                                </div>
+                                <div>
+                                    <label>Teléfono: </label>
+                                    <input type="text" name="telefono_cliente" class="form-control" id="telefono_cliente" required />
+                                </div>
+                                <div>
+                                    <label>Correo electrónico: </label>
+                                    <input type="email" name="correo_cliente" class="form-control" id="email_cliente" required />
+                                </div>
                             </div>
                         </div>
-                        <div class="section">
-                            <h3>Datos del cliente</h3>
-                            <div>
-                                <label>Nombre o razón social: </label>
-                                <input type="text" name="cliente" class="form-control" id="nombre_cliente" required />
-                            </div>
-                            <div>
-                                <label>CUIT: </label>
-                                <input type="text" name="cuit_cliente" class="form-control" id="cuit_cliente" required />
-                            </div>
-                            <div>
-                                <label>Dirección: </label>
-                                <input type="text" name="direccion_cliente" class="form-control" id="direccion_cliente" required />
-                            </div>
-                            <div>
-                                <label>Teléfono: </label>
-                                <input type="text" name="telefono_cliente" class="form-control" id="telefono_cliente" required />
-                            </div>
-                            <div>
-                                <label>Correo electrónico: </label>
-                                <input type="email" name="correo_cliente" class="form-control" id="email_cliente" required />
-                            </div>
-                        </div>
-                    </div>
 
-                    <table class="order-details">
-                        <thead>
-                        <tr>
-                            <th>Rut transporte</th>
-                            <th>Patente</th>
-                            <th>Rut chofer</th>
-                            <th>Nombre chofer</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td><input type="text" name="rut_transporte" class="form-control" id="ref1" required /></td>
-                            <td><input type="text" name="patente" class="form-control" id="descripcion1" required /></td>
-                            <td><input type="number" name="rut_chofer" class="form-control" id="cantidad1" required /></td>
-                            <td><input type="number" name="chofer" class="form-control" id="precio_unitario1" required /></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    
-                    <table class="order-details">
-                        <thead>
-                        <tr>
-                            <th>Producto</th>
-                            <th>Cantidad</th>
-                            <th>Precio unitario</th>
-                            <th>Precio total</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td><input type="text" name="producto" class="form-control" id="descripcion1" required /></td>
-                            <td><input type="number" name="cantidad" class="form-control" id="cantidad1" required /></td>
-                            <td><input type="number" name="precio" class="form-control" id="precio_unitario1" required /></td>
-                            <td><input type="number" name="total" class="form-control" id="precio_total1" required /></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div class="form-row d-flex justify-content-center">
-                        <button class="btn btn-primary btn-block py-3 px-5 col-3 control-group" type="submit" id="sendMessageButton">Agregar producto</button>
-                    </div>
+                        <table class="order-details">
+                            <thead>
+                                <tr>
+                                    <th>Rut transporte</th>
+                                    <th>Patente</th>
+                                    <th>Rut chofer</th>
+                                    <th>Nombre chofer</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" name="rut_transporte" class="form-control" required /></td>
+                                    <td><input type="text" name="patente" class="form-control" required /></td>
+                                    <td><input type="text" name="rut_chofer" class="form-control" required /></td>
+                                    <td><input type="text" name="nombre_chofer" class="form-control" required /></td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                    <div class="totals d-flex justify-content-end flex-column align-items-end">
-                        <div class="col-lg-4 d-flex justify-content-end">
-                            <label>Total pedido: </label>
-                            <input type="number" class="form-control bg-white" id="total_pedido" readonly />
+                        <table class="order-details" id="productos-table">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Precio unitario</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="producto">
+                                    <td><input type="text" name="producto[]" class="form-control" required /></td>
+                                    <td><input type="number" name="precio[]" class="form-control precio" required /></td>
+                                    <td><input type="number" name="cantidad[]" class="form-control cantidad" required /></td>
+                                    <td><input type="number" name="total[]" class="form-control bg-white total" readonly /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="form-row d-flex justify-content-center">
+                            <button type="button" class="btn btn-primary btn-block py-3 px-5 col-3 control-group" id="addProductButton">Agregar producto</button>
                         </div>
-                        <div class="col-lg-4 d-flex justify-content-end"> 
-                            <label>IVA 19%: </label>
-                            <input type="number" class="form-control bg-white" id="envio" readonly />
-                        </div>
-                        <div class="col-lg-4 d-flex justify-content-end">
-                            <label>Total a pagar: </label>
-                            <input type="number" class="form-control bg-white" id="total_pagar" readonly />
-                        </div>
-                    </div>
 
-                    <h4>Forma de pago</h4>
-                    <select name="forma_pago" class="form-select" aria-label="Default select example">
-                        <option selected>Seleccionar</option>
-                        <option value="1">Debito</option>
-                        <option value="2">Credito</option>
-                    </select>
-                      
+                        <div class="totals d-flex justify-content-end flex-column align-items-end">
+                            <div class="col-lg-4 d-flex justify-content-end">
+                                <label>Total pedido: </label>
+                                <input type="number" name="total_pedido" class="form-control bg-white" id="total_pedido" readonly />
+                            </div>
+                            <div class="col-lg-4 d-flex justify-content-end"> 
+                                <label>IVA 19%: </label>
+                                <input type="number" class="form-control bg-white" id="iva" readonly />
+                            </div>
+                            <div class="col-lg-4 d-flex justify-content-end">
+                                <label>Total a pagar: </label>
+                                <input type="number" class="form-control bg-white" id="total_pagar" readonly />
+                            </div>
+                        </div>
 
-                    <div class="footer">
-                        <div class="section">
-                            <label>Fecha de entrega: </label>
-                            <input type="date" name="entrega" class="form-control" id="fecha_entrega" required />
-                            <label>Dirección de entrega: </label>
-                            <input type="text" name="direccion_entrega" class="form-control" id="direccion_entrega" required />
+                        <h4>Forma de pago</h4>
+                        <select name="forma_pago" class="form-select" aria-label="Default select example">
+                            <option selected>Seleccionar</option>
+                            <option value="Debito">Debito</option>
+                            <option value="Credito">Credito</option>
+                        </select>
+
+                        <div class="footer">
+                            <div class="section">
+                                <label>Fecha de entrega: </label>
+                                <input type="date" name="fecha_entrega" class="form-control" id="fecha_entrega" required />
+                                <label>Dirección de entrega: </label>
+                                <input type="text" name="direccion_entrega" class="form-control" required />
+                            </div>
                         </div>
                     </div>
                 </div>
             </form>
-            </div>
         </div>
         <div class="form-row d-flex justify-content-end mt-8 mr-5">
             <a href="otra_pagina.html" class="btn btn-primary btn-block py-3 px-5 col-3 control-group">Aceptar</a>
         </div>
     </div>
-    
 </div>
 
+<script>
+    function calculateTotal(row) {
+        var precio = parseFloat(row.querySelector('.precio').value) || 0;
+        var cantidad = parseFloat(row.querySelector('.cantidad').value) || 0;
+        var total = row.querySelector('.total');
+        total.value = Math.round(precio * cantidad);
+    }
+
+    document.querySelectorAll('.precio, .cantidad').forEach(function(element) {
+        element.addEventListener('input', function() {
+            var row = this.closest('tr');
+            calculateTotal(row);
+        });
+    });
+
+    document.getElementById('addProductButton').addEventListener('click', function() {
+        var table = document.getElementById('productos-table').getElementsByTagName('tbody')[0];
+        var newRow = table.rows[0].cloneNode(true);
+        
+        // Limpiar los valores de los inputs clonados
+        var inputs = newRow.getElementsByTagName('input');
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].value = '';
+        }
+
+        table.appendChild(newRow);
+
+        // Añadir evento a los nuevos inputs
+        newRow.querySelectorAll('.precio, .cantidad').forEach(function(element) {
+            element.addEventListener('input', function() {
+                var row = this.closest('tr');
+                calculateTotal(row);
+            });
+        });
+    });
+</script>
 
 {% endblock contenido %}
