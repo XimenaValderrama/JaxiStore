@@ -24,7 +24,7 @@ class OrdenCompra(models.Model):
     total_pagar = models.IntegerField()
     forma_pago = models.CharField(max_length=100)
     fecha_entrega = models.DateField()
-    productos = models.ManyToManyField('producto')
+    productos = models.ManyToManyField('Producto')
 
 class Producto(models.Model):
     id_producto = models.AutoField(primary_key=True)
@@ -32,3 +32,6 @@ class Producto(models.Model):
     cantidad = models.IntegerField()
     precio = models.IntegerField()
     precio_total = models.IntegerField()
+
+    def __str__(self):
+        return self.nombre

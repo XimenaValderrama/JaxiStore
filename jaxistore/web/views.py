@@ -33,30 +33,32 @@ def index(request):
 
 @login_required(login_url="login")
 def factura(request):
+    from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .models import OrdenCompra, Producto
 
+@login_required(login_url="login")
+def factura(request):
     if request.method == "POST":
-        nombre_proveedor = request.POST.get("proveedor")
-        cuit_proveedor = request.POST.get("cuit_proveedor")
-        direccion_proveedor = request.POST.get("direccion_proveedor")
-        telefono_proveedor = request.POST.get("telefono_proveedor")
-        correo_proveedor = request.POST.get("correo_proveedor")
-        nombre_cliente = request.POST.get("cliente")
-        cuit_cliente = request.POST.get("cuit_cliente")
-        direccion_cliente = request.POST.get("direccion_cliente")
-        telefono_cliente = request.POST.get("telefono_cliente")
-        correo_cliente = request.POST.get("correo_cliente")
-        rut_transporte = request.POST.get("rut_transporte")
-        patente = request.POST.get("patente")
-        rut_chofer = request.POST.get("rut_chofer")
-        nombre_chofer = request.POST.get("chofer")
-        forma_pago = request.POST.get("forma_pago")
-        fecha_entrega = request.POST.get("entrega")
-        nombre = request.POST.get("producto")
-        cantidad = request.POST.get("cantidad")
-        precio = request.POST.get("precio")
-        precio_total = request.POST.get("total")
-
-        
+        nombre_proveedor = request.POST.get('nombre_proveedor')
+        cuit_proveedor = request.POST.get('cuit_proveedor')
+        direccion_proveedor = request.POST.get('direccion_proveedor')
+        telefono_proveedor = request.POST.get('telefono_proveedor')
+        correo_proveedor = request.POST.get('correo_proveedor')
+        nombre_cliente = request.POST.get('nombre_cliente')
+        cuit_cliente = request.POST.get('cuit_cliente')
+        direccion_cliente = request.POST.get('direccion_cliente')
+        telefono_cliente = request.POST.get('telefono_cliente')
+        correo_cliente = request.POST.get('correo_cliente')
+        rut_transporte = request.POST.get('rut_transporte')
+        patente = request.POST.get('patente')
+        rut_chofer = request.POST.get('rut_chofer')
+        nombre_chofer = request.POST.get('nombre_chofer')
+        total_pedido = float(request.POST.get('total_pedido').replace('$', '').replace(',', ''))
+        total_iva = float(request.POST.get('iva').replace('$', '').replace(',', ''))
+        total_pagar = float(request.POST.get('total_pagar').replace('$', '').replace(',', ''))
+        forma_pago = request.POST.get('forma_pago')
+        fecha_entrega = request.POST.get('fecha_entrega')
 
         nueva_orden = OrdenCompra(
             nombre_proveedor=nombre_proveedor,
@@ -92,7 +94,7 @@ def factura(request):
                 nombre=producto_nombre,
                 cantidad=cantidad,
                 precio=precio,
-                precio_total=total
+                precio_total=total.replace('$', '').replace(',', '')
             )
             nuevo_producto.save()
             nueva_orden.productos.add(nuevo_producto)
