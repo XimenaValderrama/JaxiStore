@@ -1,8 +1,6 @@
 
 ![JaxiStore Logo](image.png)
 
-# JaxiStore
-
 ## Descripción del Proyecto
 
 Este proyecto realiza facturas a base de órdenes de compras de diversos clientes.
@@ -42,3 +40,13 @@ Se realizó esta aplicación web para que la proveedora de insumos veterinarios 
    python manage.py runserver
    ```
 10. Iniciar sesión con sus credenciales del superusuario anteriormente creado en el paso 8.
+
+## ¡Gracias por usar JaxiStore!
+
+Esperamos que esta aplicación web facilite enormemente la gestión de tus órdenes de compra y facturación. Si tienes alguna pregunta, sugerencia o necesitas asistencia, no dudes en ponerte en contacto con nosotros.
+
+¡Nos encantaría saber tu opinión! Únete a nuestra comunidad y comparte tus experiencias. Juntos, podemos hacer de JaxiStore una herramienta aún mejor.
+
+¡Gracias por confiar en JaxiStore y feliz facturación!
+
+El equipo de JaxiStore
