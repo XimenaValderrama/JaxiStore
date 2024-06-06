@@ -24,5 +24,6 @@ urlpatterns = [
     path('index/', index, name="index"),
     path('factura/', factura, name="factura"),
     path('cerrar-sesion', cerrar_sesion, name="cerrar_sesion"),
+    path('verfactura/<int:id>/', verfactura, name="verfactura"),
 
 ]

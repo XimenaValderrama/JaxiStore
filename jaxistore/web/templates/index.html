@@ -34,7 +34,7 @@
                                   <td> {{ factura.nombre_cliente }} </td>
                                   {% load humanize %}
                                   <td> ${{ factura.total_pagar|intcomma }} </td>
-                                  <td><button type="button" class="btn py-0 btn-primary btn-sm">Ver</button></td>
+                                  <td><a href="/verfactura/{{factura.id_orden_compra}}/" class="btn py-0 btn-primary btn-sm">Ver</a></td>
                                 </tr>
                                 {% endfor %}
                               </tbody>

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import Http404
 from .models import *
 
 
@@ -97,3 +98,12 @@ def factura(request):
         return redirect('factura')  # Redirige a la misma página o a otra página después de guardar
     else:
         return render(request, "factura.html")
+
+@login_required(login_url="login")
+def verfactura(request, id):
+    try:
+        factura = OrdenCompra.objects.get(id_orden_compra=id)
+        productos = factura.productos.all()
+    except OrdenCompra.DoesNotExist:
+        raise Http404("Factura no encontrada")
+    return render(request, "verfactura.html", {'factura': factura, 'productos': productos})
