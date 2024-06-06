@@ -29,13 +29,8 @@ def cerrar_sesion(request):
 
 @login_required(login_url="login")
 def index(request):
-    return render(request, "index.html")
-
-@login_required(login_url="login")
-def factura(request):
-    from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from .models import OrdenCompra, Producto
+    facturas = OrdenCompra.objects.all()
+    return render(request, "index.html", {"facturas": facturas})
 
 @login_required(login_url="login")
 def factura(request):

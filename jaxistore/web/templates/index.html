@@ -12,45 +12,33 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-lg-12">
+                <div class="form-row d-flex justify-content-end mt-0">
+                    <a href="/factura/" class="btn btn-primary btn-block py-3 px-5 mb-3 col-3 control-group">Agregar factura</a>
+                </div>
                 <div class="bg-light rounded p-5">
                     <div id="success"></div>
                     <div class="invoice-list">
-                        <div class="invoice-item p-3 mb-3 border rounded">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <strong>Código:</strong> INV002
-                                </div>
-                                <div class="col-md-3">
-                                    <strong>Nombre de la Empresa:</strong> Empresa XYZ
-                                </div>
-                                <div class="col-md-3">
-                                    <strong>Contacto:</strong> pollitosfelices@gmail.com
-                                </div>
-                                <div class="col-md-3">
-                                    <strong>Total:</strong> $2500
-                                </div>
-                            </div>
-                        </div>
-                        <div class="invoice-item p-3 mb-3 border rounded">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <strong>Código:</strong> INV002
-                                </div>
-                                <div class="col-md-3">
-                                    <strong>Nombre de la Empresa:</strong> Empresa XYZ
-                                </div>
-                                <div class="col-md-3">
-                                    <strong>Contacto:</strong> gatitosfelices@gmail.com
-                                </div>
-                                <div class="col-md-3">
-                                    <strong>Total:</strong> $2500
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Puedes duplicar esta estructura para más facturas -->
-                    </div>
-                    <div class="form-row d-flex justify-content-center mt-4">
-                        <a href="/factura/" class="btn btn-primary btn-block py-3 px-5 col-4 control-group">Agregar factura</a>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                  <th scope="col">Codigo</th>
+                                  <th scope="col">Empresa</th>
+                                  <th scope="col">Total</th>
+                                  <th scope="col">Acciones</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for factura in facturas %}
+                                <tr scope="row">
+                                  <th> {{ factura.id_orden_compra }} </th>
+                                  <td> {{ factura.nombre_cliente }} </td>
+                                  {% load humanize %}
+                                  <td> ${{ factura.total_pagar|intcomma }} </td>
+                                  <td><button type="button" class="btn py-0 btn-primary btn-sm">Ver</button></td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
