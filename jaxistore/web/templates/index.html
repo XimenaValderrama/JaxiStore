@@ -25,6 +25,7 @@
                                   <th scope="col">Empresa</th>
                                   <th scope="col">Total</th>
                                   <th scope="col">Acciones</th>
+                                  <th scope="col">Exportar a PDF</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -35,6 +36,7 @@
                                   {% load humanize %}
                                   <td> ${{ factura.total_pagar|intcomma }} </td>
                                   <td><a href="/verfactura/{{factura.id_orden_compra}}/" class="btn py-0 btn-primary btn-sm">Ver</a></td>
+                                  <td><a href="{% url 'export_order' factura.id_orden_compra %}" class="btn py-0 btn-primary btn-sm">Exportar</a></td>
                                 </tr>
                                 {% endfor %}
                               </tbody>
