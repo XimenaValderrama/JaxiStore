@@ -1,9 +1,16 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import Http404
 from .models import *
+from django.http import HttpResponse
+from .utils import export_order_to_pdf
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+import pdfkit
+from jinja2 import Environment, FileSystemLoader
+
 
 
 # Create your views here.
@@ -107,3 +114,12 @@ def verfactura(request, id):
     except OrdenCompra.DoesNotExist:
         raise Http404("Factura no encontrada")
     return render(request, "verfactura.html", {'factura': factura, 'productos': productos})
+
+def export_order(request, order_id):
+    filename = f"orden_compra_{order_id}.pdf"
+    export_order_to_pdf(order_id, filename)
+
+    with open(filename, 'rb') as pdf:
+        response = HttpResponse(pdf.read(), content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename={filename}'
+        return response
