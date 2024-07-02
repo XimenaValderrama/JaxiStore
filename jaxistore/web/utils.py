@@ -21,6 +21,10 @@ def export_order_to_pdf(order_id, filename):
     c.drawString(x_offset, y_offset, "Orden de Compra")
     y_offset -= 0.5 * inch
     
+    c.setFont("Helvetica-Bold", 14)
+    c.drawString(x_offset, y_offset, "Datos proveedor y cliente")
+    y_offset -= 0.3 * inch
+    
     c.setFont("Helvetica", 12)
     c.drawString(x_offset, y_offset, f"Proveedor: {order.nombre_proveedor}")
     y_offset -= 0.2 * inch
@@ -31,7 +35,8 @@ def export_order_to_pdf(order_id, filename):
     c.drawString(x_offset, y_offset, f"Teléfono: {order.telefono_proveedor}")
     y_offset -= 0.2 * inch
     c.drawString(x_offset, y_offset, f"Correo: {order.correo_proveedor}")
-    y_offset -= 0.5 * inch
+    y_offset -= 0.3 * inch
+
 
     c.drawString(x_offset, y_offset, f"Cliente: {order.nombre_cliente}")
     y_offset -= 0.2 * inch
@@ -43,6 +48,18 @@ def export_order_to_pdf(order_id, filename):
     y_offset -= 0.2 * inch
     c.drawString(x_offset, y_offset, f"Correo: {order.correo_cliente}")
     y_offset -= 0.5 * inch
+    
+    c.setFont("Helvetica-Bold", 14)
+    c.drawString(x_offset, y_offset, "Datos transporte")
+    y_offset -= 0.3 * inch
+
+    c.setFont("Helvetica", 12)
+    c.drawString(x_offset, y_offset, f"Chofer: {order.nombre_chofer}")
+    y_offset -= 0.2 * inch
+    c.drawString(x_offset, y_offset, f"Rut: {order.rut_chofer}")
+    y_offset -= 0.2 * inch
+    c.drawString(x_offset, y_offset, f"Patente: {order.patente}")
+    y_offset -= 0.3 * inch
 
     c.setFont("Helvetica-Bold", 14)
     c.drawString(x_offset, y_offset, "Detalles de la Orden de Compra")
