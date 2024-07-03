@@ -10,9 +10,6 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 import pdfkit
 from jinja2 import Environment, FileSystemLoader
-
-
-
 # Create your views here.
 
 def inicio_sesion(request):
@@ -116,10 +113,89 @@ def verfactura(request, id):
     return render(request, "verfactura.html", {'factura': factura, 'productos': productos})
 
 def export_order(request, order_id):
-    filename = f"orden_compra_{order_id}.pdf"
+    filename = f"web/facturas/orden_compra_{order_id}.pdf"
     export_order_to_pdf(order_id, filename)
 
     with open(filename, 'rb') as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename={filename}'
         return response
+
+def rectificar_factura(request, order_id):
+
+    factura = OrdenCompra.objects.filter(id_orden_compra=order_id)
+    if factura.count() > 0:
+        factura =  OrdenCompra.objects.get(id_orden_compra=order_id)
+
+    #Modificar factura
+    if request.method == "POST":    
+        nombre_proveedor = request.POST.get('nombre_proveedor')
+        cuit_proveedor = request.POST.get('cuit_proveedor')
+        direccion_proveedor = request.POST.get('direccion_proveedor')
+        telefono_proveedor = request.POST.get('telefono_proveedor')
+        correo_proveedor = request.POST.get('correo_proveedor')
+        nombre_cliente = request.POST.get('nombre_cliente')
+        cuit_cliente = request.POST.get('cuit_cliente')
+        direccion_cliente = request.POST.get('direccion_cliente')
+        telefono_cliente = request.POST.get('telefono_cliente')
+        correo_cliente = request.POST.get('correo_cliente')
+        rut_transporte = request.POST.get('rut_transporte')
+        patente = request.POST.get('patente')
+        rut_chofer = request.POST.get('rut_chofer')
+        nombre_chofer = request.POST.get('nombre_chofer')
+        total_pedido = float(request.POST.get('total_pedido').replace('$', '').replace(',', ''))
+        total_iva = float(request.POST.get('iva').replace('$', '').replace(',', ''))
+        total_pagar = float(request.POST.get('total_pagar').replace('$', '').replace(',', ''))
+        forma_pago = request.POST.get('forma_pago')
+        fecha_entrega = request.POST.get('fecha_entrega')
+
+        factura.nombre_proveedor = nombre_proveedor
+        factura.cuit_proveedor=cuit_proveedor
+        factura.direccion_proveedor=direccion_proveedor
+        factura.telefono_proveedor=telefono_proveedor
+        factura.correo_proveedor=correo_proveedor
+        factura.nombre_cliente=nombre_cliente
+        factura.cuit_cliente=cuit_cliente
+        factura.direccion_cliente=direccion_cliente
+        factura.telefono_cliente=telefono_cliente
+        factura.correo_cliente=correo_cliente
+        factura.rut_transporte=rut_transporte
+        factura.patente=patente
+        factura.rut_chofer=rut_chofer
+        factura.nombre_chofer=nombre_chofer
+        factura.total_pedido=total_pedido
+        factura.total_iva=total_iva
+        factura.total_pagar=total_pagar
+        factura.forma_pago=forma_pago
+        factura.fecha_entrega=fecha_entrega
+        factura.estado = "Rectificada"
+        
+        factura.save()
+
+
+
+        # Procesar los productos
+        factura.productos.all().delete()
+
+        productos = request.POST.getlist('producto[]')
+        cantidades = request.POST.getlist('cantidad[]')
+        precios = request.POST.getlist('precio[]')
+        totales = request.POST.getlist('total[]')
+
+        for producto_nombre, cantidad, precio, total in zip(productos, cantidades, precios, totales):
+            nuevo_producto = Producto(
+                nombre=producto_nombre,
+                cantidad=cantidad,
+                precio=precio,
+                precio_total=total.replace('$', '').replace(',', '')
+            )
+            nuevo_producto.save()
+            factura.productos.add(nuevo_producto)
+
+        return redirect("index")
+
+    contexto = {
+        'factura': factura
+    }
+
+    return render(request, "rectificar_factura.html", contexto)

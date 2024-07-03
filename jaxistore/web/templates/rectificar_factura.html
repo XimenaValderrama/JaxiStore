@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block contenido %}
+
+<div class="containerfactura-fluid py-5">
+    <div class="containerfactura py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <h1 class="section-title position-relative text-center mb-5">Rectificar factura</h1>
+            </div>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="col-lg-12">
+                    <div class="order-card bg-light rounded p-5">
+                        <div class="row text-center mb-5">   
+                            <div class="col-lg-4"> 
+                                <label>Nº de orden: </label>
+                                <input type="text" value="{{ factura.id_orden_compra }}" name="orden" class="form-control bg-white" id="orden" readonly />
+                            </div>
+                        </div>
+
+                        <div class="info">
+                            <div class="section">
+                                <h3>Datos del proveedor</h3>
+                                <div>
+                                    <label>Nombre o razón social: </label>
+                                    <input type="text" value="{{ factura.nombre_proveedor }}" name="nombre_proveedor" class="form-control" id="nombre_proveedor" required />
+                                </div>
+                                <div>
+                                    <label>CUIT: </label>
+                                    <input type="text" value="{{ factura.cuit_proveedor }}" name="cuit_proveedor" class="form-control" id="cuit_proveedor" required />
+                                </div>
+                                <div>
+                                    <label>Dirección: </label>
+                                    <input type="text" value="{{ factura.direccion_proveedor }}" name="direccion_proveedor" class="form-control" id="direccion_proveedor" required />
+                                </div>
+                                <div>
+                                    <label>Teléfono: </label>
+                                    <input type="text" value="{{ factura.telefono_proveedor }}" name="telefono_proveedor" class="form-control" id="telefono_proveedor" required />
+                                </div>
+                                <div>
+                                    <label>Correo electrónico: </label>
+                                    <input type="email" value="{{ factura.correo_proveedor }}" name="correo_proveedor" class="form-control" id="email_proveedor" required />
+                                </div>
+                            </div>
+                            <div class="section">
+                                <h3>Datos del cliente</h3>
+                                <div>
+                                    <label>Nombre o razón social: </label>
+                                    <input type="text" value="{{ factura.nombre_cliente }}" name="nombre_cliente" class="form-control" id="nombre_cliente" required />
+                                </div>
+                                <div>
+                                    <label>CUIT: </label>
+                                    <input type="text" value="{{ factura.cuit_cliente }}" name="cuit_cliente" class="form-control" id="cuit_cliente" required />
+                                </div>
+                                <div>
+                                    <label>Dirección: </label>
+                                    <input type="text" value="{{ factura.direccion_cliente }}" name="direccion_cliente" class="form-control" id="direccion_cliente" required />
+                                </div>
+                                <div>
+                                    <label>Teléfono: </label>
+                                    <input type="text" value="{{ factura.telefono_cliente }}" name="telefono_cliente" class="form-control" id="telefono_cliente" required />
+                                </div>
+                                <div>
+                                    <label>Correo electrónico: </label>
+                                    <input type="email" value="{{ factura.correo_cliente }}" name="correo_cliente" class="form-control" id="email_cliente" required />
+                                </div>
+                            </div>
+                        </div>
+
+                        <table class="order-details">
+                            <thead>
+                                <tr>
+                                    <th>Rut transporte</th>
+                                    <th>Patente</th>
+                                    <th>Rut chofer</th>
+                                    <th>Nombre chofer</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" value="{{ factura.rut_transporte }}" name="rut_transporte" class="form-control" required /></td>
+                                    <td><input type="text" value="{{ factura.patente }}" name="patente" class="form-control" required /></td>
+                                    <td><input type="text" value="{{ factura.rut_chofer }}" name="rut_chofer" class="form-control" required /></td>
+                                    <td><input type="text" value="{{ factura.nombre_chofer }}" name="nombre_chofer" class="form-control" required /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="order-details" id="productos-table">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Precio unitario</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for producto in factura.productos.all %}
+                                <tr class="producto">
+                                    <td><input type="text" name="producto[]" class="form-control" value="{{ producto.nombre }}" required /></td>
+                                    <td><input type="number" name="precio[]" class="form-control precio" value="{{ producto.precio }}" required /></td>
+                                    <td><input type="number" name="cantidad[]" class="form-control cantidad" value="{{ producto.cantidad }}" required /></td>
+                                    <td><input type="text" name="total[]" class="form-control bg-white total" value="{{ producto.precio_total }}" readonly /></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="form-row d-flex justify-content-center">
+                            <button type="button" class="btn btn-primary btn-block py-3 px-5 col-3 control-group" id="addProductButton">Agregar producto</button>
+                        </div>
+
+                        <div class="totals d-flex justify-content-end flex-column align-items-end">
+                            <div class="col-lg-4 d-flex justify-content-end">
+                                <label>Total pedido: </label>
+                                <input type="text" name="total_pedido" class="form-control bg-white" id="total_pedido" readonly />
+                            </div>
+                            <div class="col-lg-4 d-flex justify-content-end"> 
+                                <label>IVA 19%: </label>
+                                <input type="text" name="iva" class="form-control bg-white" id="iva" readonly />
+                            </div>
+                            <div class="col-lg-4 d-flex justify-content-end">
+                                <label>Total a pagar: </label>
+                                <input type="text" name="total_pagar" class="form-control bg-white" id="total_pagar" readonly />
+                            </div>
+                        </div>
+
+                        <h4>Forma de pago</h4>
+                        <select name="forma_pago" class="form-select" aria-label="Default select example">
+                            <option {% if factura.forma_pago == "Debito" %} selected {% endif %} value="Debito">Debito</option>
+                            <option {% if factura.forma_pago == "Credito" %} selected {% endif %} value="Credito">Credito</option>
+                        </select>
+
+                        <div class="footer">
+                            <div class="section">
+                                <label>Fecha de entrega: </label>
+                                <input type="date" value="{{ factura.fecha_entrega|date:'Y-m-d' }}" name="fecha_entrega" class="form-control" id="fecha_entrega" required />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row d-flex justify-content-center">
+                    <button class="btn btn-primary btn-block py-3 px-5 col-4 control-group" type="submit">Aceptar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function formatCurrency(value) {
+        return '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function calculateTotal(row) {
+        var precio = parseFloat(row.querySelector('.precio').value) || 0;
+        var cantidad = parseFloat(row.querySelector('.cantidad').value) || 0;
+        var total = row.querySelector('.total');
+        var totalValue = Math.round(precio * cantidad);
+        total.value = formatCurrency(totalValue);
+        calculateSubtotal();
+    }
+
+    function calculateSubtotal() {
+        var rows = document.querySelectorAll('#productos-table tbody tr');
+        var subtotal = 0;
+        rows.forEach(function(row) {
+            var total = parseFloat(row.querySelector('.total').value.replace(/[^0-9.-]+/g,"")) || 0;
+            subtotal += total;
+        });
+        document.getElementById('total_pedido').value = formatCurrency(subtotal);
+        calculateIVA(subtotal);
+    }
+
+    function calculateIVA(subtotal) {
+        var iva = Math.round(subtotal * 0.19);
+        document.getElementById('iva').value = formatCurrency(iva);
+        calculateTotalPagar(subtotal, iva);
+    }
+
+    function calculateTotalPagar(subtotal, iva) {
+        var totalPagar = subtotal + iva;
+        document.getElementById('total_pagar').value = formatCurrency(totalPagar);
+    }
+
+    document.querySelectorAll('.precio, .cantidad').forEach(function(element) {
+        element.addEventListener('input', function() {
+            var row = this.closest('tr');
+            calculateTotal(row);
+        });
+    });
+
+    document.getElementById('addProductButton').addEventListener('click', function() {
+        var table = document.getElementById('productos-table').getElementsByTagName('tbody')[0];
+        var newRow = table.rows[0].cloneNode(true);
+        
+        // Limpiar los valores de los inputs clonados
+        var inputs = newRow.getElementsByTagName('input');
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].value = '';
+        }
+
+        table.appendChild(newRow);
+
+        // Añadir evento a los nuevos inputs
+        newRow.querySelectorAll('.precio, .cantidad').forEach(function(element) {
+            element.addEventListener('input', function() {
+                var row = this.closest('tr');
+                calculateTotal(row);
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        calculateTotalPagar()
+        calculateIVA()
+        calculateSubtotal()
+        calculateTotal()
+    })
+
+   
+
+</script>
+
+{% endblock contenido %}
