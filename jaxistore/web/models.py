@@ -3,6 +3,12 @@ from django.db import models
 # Create your models here.
 
 class OrdenCompra(models.Model):
+
+    ESTADOS_FACTURA = [
+        ('creada', 'Creada'),
+        ('rectificada', 'Rectificada')
+    ]
+
     id_orden_compra = models.AutoField(primary_key=True)
     fecha = models.DateField(auto_now_add=True)
     nombre_proveedor = models.CharField(max_length=100)
@@ -25,6 +31,8 @@ class OrdenCompra(models.Model):
     forma_pago = models.CharField(max_length=100)
     fecha_entrega = models.DateField()
     productos = models.ManyToManyField('Producto')
+    estado = models.CharField(max_length=20, choices=ESTADOS_FACTURA, default='creada')
+
 
 class Producto(models.Model):
     id_producto = models.AutoField(primary_key=True)

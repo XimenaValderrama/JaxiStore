@@ -130,7 +130,7 @@
                                 <label>Forma de pago </label>
                                 <input type="text" name="forma_pago" class="form-control bg-white w-25" value="{{ factura.forma_pago }}" readonly />
                                 <label>Fecha de entrega: </label>
-                                <input type="date" name="fecha_entrega" class="form-control bg-white" value="{{ factura.fecha_entrega }}" id="fecha_entrega" readonly />
+                                <input type="date" name="fecha_entrega" class="form-control bg-white" value="{{ factura.fecha_entrega|date:'Y-m-d' }}" id="fecha_entrega" readonly />
                                 <label>Dirección de entrega: </label>
                                 <input type="text" name="direccion_cliente" value="{{ factura.direccion_cliente }}" class="form-control bg-white" readonly />
                             </div>
