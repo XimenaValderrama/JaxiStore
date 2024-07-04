@@ -40,6 +40,9 @@ class OrdenCompra(models.Model):
     estado = models.CharField(max_length=20, choices=EstadosFactura, default=EstadosFactura.CREADA)
     estado_entrega = models.CharField(max_length=20, choices=EstadosEntrega, default=EstadosEntrega.POR_ENTREGAR)
 
+    direccion_entrega = models.CharField(max_length=100, blank=True, null=True)
+    rut_persona_recibe = models.CharField(max_length=100, blank=True, null=True)
+    imagen_entrega = models.ImageField(upload_to='entregas/', blank=True, null=True)
     motivo_rechazo = models.TextField(blank=True, null=True)
 
 

@@ -64,6 +64,10 @@ body {
   background-color: #F3F6FF;
 }
 
+.btn-deshabilitado {
+  cursor: not-allowed;
+}
+
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
 }

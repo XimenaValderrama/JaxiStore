@@ -7,7 +7,7 @@
     <div class="containerfactura py-5">
         <div class="row justify-content-center">
             <div class="col-lg-6">
-                <h1 class="section-title position-relative text-center mb-5">Orden de compra</h1>
+                <h1 class="section-title position-relative text-center mt-5 mb-5">Orden de compra</h1>
             </div>
             <form action="" method="POST">
                 {% csrf_token %}
@@ -123,21 +123,45 @@
                             </div>
                         </div>
                         
-
-                    
                         <div class="footer">
                             <div class="section">
                                 <label>Forma de pago </label>
                                 <input type="text" name="forma_pago" class="form-control bg-white w-25" value="{{ factura.forma_pago }}" readonly />
                                 <label>Fecha de entrega: </label>
                                 <input type="date" name="fecha_entrega" class="form-control bg-white" value="{{ factura.fecha_entrega|date:'Y-m-d' }}" id="fecha_entrega" readonly />
-                                <label>Dirección de entrega: </label>
-                                <input type="text" name="direccion_cliente" value="{{ factura.direccion_cliente }}" class="form-control bg-white" readonly />
                             </div>
                         </div>
+
+
                     </div>
                 </div>
+
+                <hr>
+
             </form>
+
+            <div class="col-12 mt-5">
+                <h1 class="section-title position-relative text-center mb-5">Estado y seguimiento</h1>
+            </div>
+
+            <div class="col-6">
+
+                <p><strong>Estado de factura:</strong> {{ factura.get_estado_display }}</p>
+                <p><strong>Estado de entrega:</strong> {{ factura.get_estado_entrega_display }}</p>
+
+                {% if factura.estado_entrega == 'RE' %}
+                <p><strong>Motivo de rechazo:</strong> {{ factura.motivo_rechazo }}</p>
+                {% endif %}
+
+                {% if factura.estado_entrega == 'EN' %}
+                <p><strong>Dirección de entrega:</strong> {{ factura.direccion_entrega }}</p>
+                <p><strong>RUT persona que recibe:</strong> {{ factura.rut_persona_recibe }}</p>
+                <p><strong>Imagen de entrega:</strong></p>
+                <img class="border w-25" src="{{ factura.imagen_entrega.url }}" alt="Imagen de Entrega">
+                {% endif %}
+
+            </div>
+
         </div>
     </div>
 </div>
