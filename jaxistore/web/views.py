@@ -233,8 +233,7 @@ def rechazar_entrega(request, order_id):
         motivo_rechazo = request.POST.get('motivo_rechazo')
 
         factura = OrdenCompra.objects.filter(id_orden_compra=order_id)
-        if factura.estado_entrega == factura.EstadosEntrega.ENTREGADA:
-            return redirect("index")
+        
 
         if factura.count() > 0:
             factura =  OrdenCompra.objects.get(id_orden_compra=order_id)
