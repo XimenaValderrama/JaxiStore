@@ -12,17 +12,17 @@ Se realizó esta aplicación web para que la proveedora de insumos veterinarios 
 ## Cómo Comenzar la Instalación de la Aplicación Web
 
 1. Instalar Python en su dispositivo.
-2. Descargar el archivo de la aplicación web.
-3. Abrirlo en Visual Studio Code.
+2. Descargar el repositorio de la aplicación web.
+3. Abrir el proyecto en Visual Studio Code.
 4. Crear un entorno con el siguiente comando:
    ```shell
    python -m venv nombre_del_entorno
    ```
-5. Activar el entorno:
+5. Activar el entorno virtual:
    ```shell
    nombre_del_entorno\Scripts\activate
    ```
-6. Una vez activado el entorno, instalar las dependencias del archivo `requirements.txt` con el siguiente comando:
+6. Una vez activado el entorno virtual, instalar las dependencias del archivo `requirements.txt` con el siguiente comando:
    ```shell
    pip install -r requirements.txt
    ```
@@ -30,12 +30,12 @@ Se realizó esta aplicación web para que la proveedora de insumos veterinarios 
    ```shell
    python manage.py migrate
    ```
-8. Crear un superusuario con el que podrán iniciar sesión con el siguiente comando:
+8. Crear un superusuario con el que se podra iniciar sesión con el siguiente comando:
    ```shell
    python manage.py createsuperuser
    ```
    Debe darle un nombre, un correo y una contraseña.
-9. Levantar el servidor para poder utilizar la aplicación web con el siguiente comando:
+9. Levantar el servidor local para poder utilizar la aplicación web con el siguiente comando:
    ```shell
    python manage.py runserver
    ```
