@@ -214,11 +214,15 @@ def entrega_factura(request, order_id):
     if factura.count() > 0:
         factura =  OrdenCompra.objects.get(id_orden_compra=order_id)
 
-        contexto = {
-            'factura': factura
-        }
-        return render(request, "entrega_factura.html", contexto)
-    
+        if factura.estado_entrega != factura.EstadosEntrega.ENTREGADA:
+
+            contexto = {
+                'factura': factura
+            }
+            return render(request, "entrega_factura.html", contexto)
+
+        return redirect("index")
+
     else:
         return redirect("index")
     
@@ -227,7 +231,11 @@ def rechazar_entrega(request, order_id):
 
     if request.method == "POST":
         motivo_rechazo = request.POST.get('motivo_rechazo')
+
         factura = OrdenCompra.objects.filter(id_orden_compra=order_id)
+        if factura.estado_entrega == factura.EstadosEntrega.ENTREGADA:
+            return redirect("index")
+
         if factura.count() > 0:
             factura =  OrdenCompra.objects.get(id_orden_compra=order_id)
             factura.estado_entrega = factura.EstadosEntrega.RECHAZADA
@@ -239,6 +247,10 @@ def rechazar_entrega(request, order_id):
         factura = OrdenCompra.objects.filter(id_orden_compra=order_id)
         if factura.count() > 0:
             factura =  OrdenCompra.objects.get(id_orden_compra=order_id)
+
+            if factura.estado_entrega == factura.EstadosEntrega.ENTREGADA:
+                return redirect("index")
+        
             return render(request, "rechazar_entrega.html")
         
         else:
@@ -246,4 +258,36 @@ def rechazar_entrega(request, order_id):
 
 @login_required(login_url="login")
 def aceptar_entrega(request, order_id):
-    pass
+    
+    if request.method == "POST":
+
+        direccion_entrega = request.POST.get('direccion_entrega')
+        rut_persona_recibe = request.POST.get('rut_recibe')
+        imagen_entrega = request.FILES.get('imagen_entrega')
+
+        factura = OrdenCompra.objects.filter(id_orden_compra=order_id)
+        if factura.count() > 0:
+
+            factura =  OrdenCompra.objects.get(id_orden_compra=order_id)
+            if factura.estado_entrega == factura.EstadosEntrega.ENTREGADA:
+                return redirect("index")
+
+
+            factura.estado_entrega = factura.EstadosEntrega.ENTREGADA
+            factura.direccion_entrega = direccion_entrega
+            factura.rut_persona_recibe = rut_persona_recibe
+            factura.imagen_entrega = imagen_entrega
+            factura.save()
+            return redirect("index")
+
+    else:
+        factura = OrdenCompra.objects.filter(id_orden_compra=order_id)
+        if factura.count() > 0:
+            factura =  OrdenCompra.objects.get(id_orden_compra=order_id)
+            if factura.estado_entrega == factura.EstadosEntrega.ENTREGADA:
+                return redirect("index")
+            
+            return render(request, "aceptar_entrega.html")
+        
+        else:
+            return redirect("index")
