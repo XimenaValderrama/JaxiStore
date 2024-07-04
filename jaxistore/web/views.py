@@ -99,7 +99,9 @@ def factura(request):
             nuevo_producto.save()
             nueva_orden.productos.add(nuevo_producto)
 
-        return redirect('factura')  # Redirige a la misma página o a otra página después de guardar
+
+        return render(request, "factura.html", {"mensaje_factura_creada": True})
+    
     else:
         return render(request, "factura.html")
 
@@ -108,10 +110,14 @@ def verfactura(request, id):
     try:
         factura = OrdenCompra.objects.get(id_orden_compra=id)
         productos = factura.productos.all()
+
+        print(factura.estado_entrega)
+
     except OrdenCompra.DoesNotExist:
         raise Http404("Factura no encontrada")
     return render(request, "verfactura.html", {'factura': factura, 'productos': productos})
 
+@login_required(login_url="login")
 def export_order(request, order_id):
     filename = f"web/facturas/orden_compra_{order_id}.pdf"
     export_order_to_pdf(order_id, filename)
@@ -121,6 +127,7 @@ def export_order(request, order_id):
         response['Content-Disposition'] = f'attachment; filename={filename}'
         return response
 
+@login_required(login_url="login")
 def rectificar_factura(request, order_id):
 
     factura = OrdenCompra.objects.filter(id_orden_compra=order_id)
@@ -199,3 +206,44 @@ def rectificar_factura(request, order_id):
     }
 
     return render(request, "rectificar_factura.html", contexto)
+
+@login_required(login_url="login")
+def entrega_factura(request, order_id):
+    
+    factura = OrdenCompra.objects.filter(id_orden_compra=order_id)
+    if factura.count() > 0:
+        factura =  OrdenCompra.objects.get(id_orden_compra=order_id)
+
+        contexto = {
+            'factura': factura
+        }
+        return render(request, "entrega_factura.html", contexto)
+    
+    else:
+        return redirect("index")
+    
+@login_required(login_url="login")
+def rechazar_entrega(request, order_id):
+
+    if request.method == "POST":
+        motivo_rechazo = request.POST.get('motivo_rechazo')
+        factura = OrdenCompra.objects.filter(id_orden_compra=order_id)
+        if factura.count() > 0:
+            factura =  OrdenCompra.objects.get(id_orden_compra=order_id)
+            factura.estado_entrega = factura.EstadosEntrega.RECHAZADA
+            factura.motivo_rechazo = motivo_rechazo
+            factura.save()
+            return redirect("index")
+
+    else:
+        factura = OrdenCompra.objects.filter(id_orden_compra=order_id)
+        if factura.count() > 0:
+            factura =  OrdenCompra.objects.get(id_orden_compra=order_id)
+            return render(request, "rechazar_entrega.html")
+        
+        else:
+            return redirect("index")
+
+@login_required(login_url="login")
+def aceptar_entrega(request, order_id):
+    pass
