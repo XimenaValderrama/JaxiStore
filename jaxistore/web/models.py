@@ -1,13 +1,18 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
 class OrdenCompra(models.Model):
 
-    ESTADOS_FACTURA = [
-        ('creada', 'Creada'),
-        ('rectificada', 'Rectificada')
-    ]
+    class EstadosFactura(models.TextChoices):
+        CREADA = "CR", _("Creada")
+        RECTIFICADA = "RE", _("Rectificada")
+
+    class EstadosEntrega(models.TextChoices):
+        POR_ENTREGAR = "PE", _("Por entregar")
+        ENTREGADA = "EN", _("Entregada")
+        RECHAZADA = "RE", _("Rechazada")
 
     id_orden_compra = models.AutoField(primary_key=True)
     fecha = models.DateField(auto_now_add=True)
@@ -31,7 +36,11 @@ class OrdenCompra(models.Model):
     forma_pago = models.CharField(max_length=100)
     fecha_entrega = models.DateField()
     productos = models.ManyToManyField('Producto')
-    estado = models.CharField(max_length=20, choices=ESTADOS_FACTURA, default='creada')
+
+    estado = models.CharField(max_length=20, choices=EstadosFactura, default=EstadosFactura.CREADA)
+    estado_entrega = models.CharField(max_length=20, choices=EstadosEntrega, default=EstadosEntrega.POR_ENTREGAR)
+
+    motivo_rechazo = models.TextField(blank=True, null=True)
 
 
 class Producto(models.Model):
