@@ -34,16 +34,42 @@
                                 <tr scope="row">
                                   <th>{{ factura.id_orden_compra }}</th>
                                   <td>{{ factura.nombre_cliente }}</td>
-                                  <td>{{ factura.get_estado_display }}</td>
-                                  <td>{{ factura.get_estado_entrega_display }}</td>
+                                  <td class="text-center">
+                                    <div class="badge badge-pill {{ factura.get_estado_color }} mt-2 mb-2">
+                                        {{ factura.get_estado_display }}
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <div class="badge badge-pill {{ factura.get_estado_color_entrega }} mt-2 mb-2">
+                                        {{ factura.get_estado_entrega_display }}
+                                    </div>
+                                </td>
                                   <td>${{ factura.total_pagar | intcomma }}</td>
                                   <td class="text-center">
                                     <a href="/verfactura/{{factura.id_orden_compra}}/" class="btn py-0 btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+
+                                    {% if factura.estado_entrega != 'EN' and factura.estado != 'AN' %}
                                     <a href="{% url 'rectificar_factura' factura.id_orden_compra %}" class="btn py-0 btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+                                    {% elif factura.estado == 'AN' %}
+                                    <button class="btn py-0 btn-deshabilitado btn-dark btn-sm" disabled><i class="fas fa-edit"></i></button>
+                                    {% else %}
+                                    <button class="btn py-0 btn-deshabilitado btn-dark btn-sm" disabled><i class="fas fa-edit"></i></button>
+                                    {% endif %}
+
                                     <a href="{% url 'export_order' factura.id_orden_compra %}" class="btn py-0 btn-primary btn-sm"><i class="fas fa-file-export"></i></a>
 
-                                    {% if factura.estado_entrega != 'EN' %}
+                                    {% if factura.estado_entrega != 'EN' and factura.estado != 'AN' %}
+                                    <a href="{% url 'anular_factura' factura.id_orden_compra %}" class="btn py-0 btn-primary btn-sm"><i class="fas fa-ban"></i></a>                                   
+                                    {% elif factura.estado == 'AN' %}
+                                    <button class="btn py-0 btn-deshabilitado btn-dark btn-sm" disabled><i class="fas fa-ban"></i></button>
+                                    {% else %}
+                                    <button class="btn py-0 btn-deshabilitado btn-dark btn-sm" disabled><i class="fas fa-ban"></i></button>
+                                    {% endif %}
+                                    
+                                    {% if factura.estado_entrega != 'EN' and factura.estado != 'AN' %}
                                     <a href="{% url 'entrega_factura' factura.id_orden_compra %}" class="btn py-0 btn-primary btn-sm"><i class="fas fa-truck"></i></a>
+                                    {% elif factura.estado == 'AN' %}
+                                    <button class="btn py-0 btn-deshabilitado btn-dark btn-sm" disabled><i class="fas fa-truck"></i></button>
                                     {% else %}
                                     <button class="btn py-0 btn-deshabilitado btn-dark btn-sm" disabled><i class="fas fa-truck"></i></button>
                                     {% endif %}

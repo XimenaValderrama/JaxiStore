@@ -290,3 +290,12 @@ def aceptar_entrega(request, order_id):
         
         else:
             return redirect("index")
+
+
+def anular_factura(request, factura_id):
+    factura = get_object_or_404(OrdenCompra, id_orden_compra=factura_id)
+    if factura.estado != OrdenCompra.EstadosFactura.ANULADA:
+        factura.estado = OrdenCompra.EstadosFactura.ANULADA
+        factura.save()
+        return redirect("index")
+    return redirect("index")

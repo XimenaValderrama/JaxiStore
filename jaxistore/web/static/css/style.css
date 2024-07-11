@@ -10238,3 +10238,31 @@ body {
   margin-top: 20px;
 }
 
+
+.badge-soft-success {
+  background-color: #c3e6cb; /* Un verde más fuerte */
+  color: #155724;
+  margin-top: 5px; /* Ajusta este valor según sea necesario */
+  margin-bottom: 5px; /* Ajusta este valor según sea necesario */
+}
+
+.badge-soft-warning {
+  background-color: #ffeeba; /* Un amarillo más fuerte */
+  color: #856404;
+  margin-top: 5px; /* Ajusta este valor según sea necesario */
+  margin-bottom: 5px; /* Ajusta este valor según sea necesario */
+}
+
+.badge-soft-danger {
+  background-color: #f5c6cb; /* Un rojo más fuerte */
+  color: #721c24;
+  margin-top: 5px; /* Ajusta este valor según sea necesario */
+  margin-bottom: 5px; /* Ajusta este valor según sea necesario */
+}
+
+.badge-soft-secondary {
+  background-color: #d6d8db; /* Un gris más fuerte */
+  color: #6c757d;
+  margin-top: 5px; /* Ajusta este valor según sea necesario */
+  margin-bottom: 5px; /* Ajusta este valor según sea necesario */
+}

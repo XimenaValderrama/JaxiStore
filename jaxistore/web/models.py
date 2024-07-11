@@ -8,6 +8,7 @@ class OrdenCompra(models.Model):
     class EstadosFactura(models.TextChoices):
         CREADA = "CR", _("Creada")
         RECTIFICADA = "RE", _("Rectificada")
+        ANULADA = "AN", _("Anulada")
 
     class EstadosEntrega(models.TextChoices):
         POR_ENTREGAR = "PE", _("Por entregar")
@@ -44,6 +45,25 @@ class OrdenCompra(models.Model):
     rut_persona_recibe = models.CharField(max_length=100, blank=True, null=True)
     imagen_entrega = models.ImageField(upload_to='entregas/', blank=True, null=True)
     motivo_rechazo = models.TextField(blank=True, null=True)
+
+
+    def get_estado_color(self):
+        if self.estado == self.EstadosFactura.CREADA:
+            return 'badge-soft-success'
+        elif self.estado == self.EstadosFactura.RECTIFICADA:
+            return 'badge-soft-warning'
+        elif self.estado == self.EstadosFactura.ANULADA:
+            return 'badge-soft-danger'
+        return 'badge-soft-secondary'
+
+    def get_estado_color_entrega(self):
+        if self.estado_entrega == self.EstadosEntrega.ENTREGADA:
+            return 'badge-soft-success'
+        elif self.estado_entrega == self.EstadosEntrega.POR_ENTREGAR:
+            return 'badge-soft-warning'
+        elif self.estado_entrega == self.EstadosEntrega.RECHAZADA:
+            return 'badge-soft-danger'
+        return 'badge-soft-secondary'
 
 
 class Producto(models.Model):
