@@ -9,6 +9,7 @@ from .utils import export_order_to_pdf
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 import pdfkit
+from django.db.models import Count
 from jinja2 import Environment, FileSystemLoader
 # Create your views here.
 
@@ -34,8 +35,27 @@ def cerrar_sesion(request):
 
 @login_required(login_url="login")
 def index(request):
+
     facturas = OrdenCompra.objects.all()
-    return render(request, "index.html", {"facturas": facturas})
+
+    facturas_creadas = OrdenCompra.objects.filter(estado="CR").count()
+    facturas_rectificadas = OrdenCompra.objects.filter(estado="RE").count()
+    facturas_anuladas = OrdenCompra.objects.filter(estado="AN").count()
+    facturas_por_entregar = OrdenCompra.objects.filter(estado_entrega="PE").count()
+    facturas_entregadas = OrdenCompra.objects.filter(estado_entrega="EN").count()
+    facturas_rechazadas = OrdenCompra.objects.filter(estado_entrega="RE").count()
+
+    contexto = {
+        "facturas": facturas,
+        "facturas_creadas" : facturas_creadas,
+        "facturas_rectificadas" : facturas_rectificadas,
+        "facturas_anuladas" : facturas_anuladas,
+        "facturas_por_entregar" : facturas_por_entregar,
+        "facturas_entregadas" : facturas_entregadas,
+        "facturas_rechazadas" : facturas_rechazadas,
+        }
+
+    return render(request, "index.html", contexto)
 
 @login_required(login_url="login")
 def factura(request):
@@ -240,7 +260,7 @@ def rechazar_entrega(request, order_id):
             factura.estado_entrega = factura.EstadosEntrega.RECHAZADA
             factura.motivo_rechazo = motivo_rechazo
             factura.save()
-            return redirect("index")
+            return render(request, "rechazar_entrega.html", {"mensaje_factura_rechazada": True})
 
     else:
         factura = OrdenCompra.objects.filter(id_orden_compra=order_id)
@@ -277,7 +297,7 @@ def aceptar_entrega(request, order_id):
             factura.rut_persona_recibe = rut_persona_recibe
             factura.imagen_entrega = imagen_entrega
             factura.save()
-            return redirect("index")
+            return render(request, "aceptar_entrega.html", {"mensaje_factura_entregada": True})
 
     else:
         factura = OrdenCompra.objects.filter(id_orden_compra=order_id)
@@ -291,7 +311,7 @@ def aceptar_entrega(request, order_id):
         else:
             return redirect("index")
 
-
+@login_required(login_url="login")           
 def anular_factura(request, factura_id):
     factura = get_object_or_404(OrdenCompra, id_orden_compra=factura_id)
     if factura.estado != OrdenCompra.EstadosFactura.ANULADA:
@@ -299,3 +319,4 @@ def anular_factura(request, factura_id):
         factura.save()
         return redirect("index")
     return redirect("index")
+

@@ -38,4 +38,18 @@
         
     </div>
 </div>
+
+{% if mensaje_factura_entregada %}
+<script>
+    swal({
+        title: '¡Entrega aceptada!',
+        text: "La entrega ha sido registrada exitosamente.",
+        icon: 'success',
+        button: 'Aceptar'
+    }).then(() => {
+        window.location.href = '{% url "index" %}';  // Cambia esta URL por la página de destino
+    });
+</script>
+{% endif %}
+
 {% endblock contenido %}
