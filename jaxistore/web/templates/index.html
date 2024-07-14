@@ -46,32 +46,32 @@
                                 </td>
                                   <td>${{ factura.total_pagar | intcomma }}</td>
                                   <td class="text-center">
-                                    <a href="/verfactura/{{factura.id_orden_compra}}/" class="btn py-0 btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                                    <a href="/verfactura/{{factura.id_orden_compra}}/" class="btn py-0 px-3 btn-primary btn-sm"><i class="fas fa-eye"></i></a>
 
                                     {% if factura.estado_entrega != 'EN' and factura.estado != 'AN' %}
-                                    <a href="{% url 'rectificar_factura' factura.id_orden_compra %}" class="btn py-0 btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+                                    <a href="{% url 'rectificar_factura' factura.id_orden_compra %}" class="btn py-0 px-3 btn-primary btn-sm"><i class="fas fa-edit"></i></a>
                                     {% elif factura.estado == 'AN' %}
-                                    <button class="btn py-0 btn-deshabilitado btn-dark btn-sm" disabled><i class="fas fa-edit"></i></button>
+                                    <button class="btn py-0 px-3 btn-deshabilitado btn-dark btn-sm" disabled><i class="fas fa-edit"></i></button>
                                     {% else %}
-                                    <button class="btn py-0 btn-deshabilitado btn-dark btn-sm" disabled><i class="fas fa-edit"></i></button>
+                                    <button class="btn py-0 px-3 btn-deshabilitado btn-dark btn-sm" disabled><i class="fas fa-edit"></i></button>
                                     {% endif %}
 
-                                    <a href="{% url 'export_order' factura.id_orden_compra %}" class="btn py-0 btn-primary btn-sm"><i class="fas fa-file-export"></i></a>
+                                    <a href="{% url 'export_order' factura.id_orden_compra %}" class="btn py-0 px-3 btn-primary btn-sm"><i class="fas fa-file-export"></i></a>
 
                                     {% if factura.estado_entrega != 'EN' and factura.estado != 'AN' %}
-                                    <a href="{% url 'anular_factura' factura.id_orden_compra %}" class="btn py-0 btn-primary btn-sm"><i class="fas fa-ban"></i></a>                                   
+                                    <a href="#" onclick="mostrarAlerta({{factura.id_orden_compra}})" class="btn py-0 px-3 btn-primary btn-sm "><i class="fas fa-ban"></i></a>                                   
                                     {% elif factura.estado == 'AN' %}
-                                    <button class="btn py-0 btn-deshabilitado btn-dark btn-sm" disabled><i class="fas fa-ban"></i></button>
+                                    <button class="btn py-0 px-3 btn-deshabilitado btn-dark btn-sm" disabled><i class="fas fa-ban"></i></button>
                                     {% else %}
-                                    <button class="btn py-0 btn-deshabilitado btn-dark btn-sm" disabled><i class="fas fa-ban"></i></button>
+                                    <button class="btn py-0 px-3 btn-deshabilitado btn-dark btn-sm" disabled><i class="fas fa-ban"></i></button>
                                     {% endif %}
                                     
                                     {% if factura.estado_entrega != 'EN' and factura.estado != 'AN' %}
-                                    <a href="{% url 'entrega_factura' factura.id_orden_compra %}" class="btn py-0 btn-primary btn-sm"><i class="fas fa-truck"></i></a>
+                                    <a href="{% url 'entrega_factura' factura.id_orden_compra %}" class="btn py-0 px-3 btn-primary btn-sm"><i class="fas fa-truck"></i></a>
                                     {% elif factura.estado == 'AN' %}
-                                    <button class="btn py-0 btn-deshabilitado btn-dark btn-sm" disabled><i class="fas fa-truck"></i></button>
+                                    <button class="btn py-0 px-3 btn-deshabilitado btn-dark btn-sm" disabled><i class="fas fa-truck"></i></button>
                                     {% else %}
-                                    <button class="btn py-0 btn-deshabilitado btn-dark btn-sm" disabled><i class="fas fa-truck"></i></button>
+                                    <button class="btn py-0 px-3 btn-deshabilitado btn-dark btn-sm" disabled><i class="fas fa-truck"></i></button>
                                     {% endif %}
 
                                   <td>
@@ -82,8 +82,80 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-6">
+                <div class="invoice-list">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                              <th scope="col">Estados</th>
+                              <th scope="col">Cantidad</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr scope="row">
+                                <tr>
+                                    <td>Creada</td>
+                                    <td>{{ facturas_creadas }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Rectificada</td>
+                                    <td>{{ facturas_rectificadas }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Anulada</td>
+                                    <td>{{ facturas_anuladas }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Por Entregar</td>
+                                    <td>{{ facturas_por_entregar }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Entregadas</td>
+                                    <td>{{ facturas_entregadas }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Rechazadas</td>
+                                    <td>{{ facturas_rechazadas }}</td>
+                                </tr>
+                            </tr>
+
+                          </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    function mostrarAlerta(id_factura) {
+        swal({
+            title: '¿Deseas anular la factura?',
+            text: "Esta acción no se puede deshacer.",
+            icon: 'warning',
+            buttons: {
+                cancel: {
+                    text: "Cancelar",
+                    value: null,
+                    visible: true,
+                    className: "",
+                    closeModal: true,
+                },
+                confirm: {
+                    text: "Aceptar",
+                    value: true,
+                    visible: true,
+                    className: "btn-success",
+                    closeModal: true
+                }
+            }
+        }).then((value) => {
+            if (value) {
+                window.location.href = "/anular_factura/" + id_factura; // Cambia esta URL por la página de destino
+            }
+        });
+    }
+</script>
+
 
 {% endblock contenido  %}

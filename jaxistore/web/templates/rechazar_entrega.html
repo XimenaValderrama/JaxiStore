@@ -32,4 +32,18 @@
         
     </div>
 </div>
+
+{% if mensaje_factura_rechazada %}
+<script>
+    swal({
+        title: '¡Entrega rechazada!',
+        text: "La entrega ha sido rechazada.",
+        icon: 'warning',
+        button: 'Aceptar'
+    }).then(() => {
+        window.location.href = '{% url "index" %}';  // Cambia esta URL por la página de destino
+    });
+</script>
+{% endif %}
+
 {% endblock contenido %}
