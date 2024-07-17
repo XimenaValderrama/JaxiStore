@@ -3,6 +3,15 @@ from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
 from .models import OrdenCompra
 
+def draw_watermark(c, text, width, height):
+    c.saveState()
+    c.setFont("Helvetica", 80)  
+    c.setFillColorRGB(1, 0, 0, alpha=0.3)  
+    c.translate(width / 2, height / 2)
+    c.rotate(45)
+    c.drawCentredString(0, 0, text)
+    c.restoreState()
+
 def export_order_to_pdf(order_id, filename):
     order = OrdenCompra.objects.get(id_orden_compra=order_id)
     productos = order.productos.all()
@@ -93,5 +102,9 @@ def export_order_to_pdf(order_id, filename):
     c.drawString(x_offset, y_offset, f"Forma de Pago: {order.forma_pago}")
     y_offset -= 0.2 * inch
     c.drawString(x_offset, y_offset, f"Fecha de Entrega: {order.fecha_entrega}")
+
+    # Añadir la marca de agua si la factura está anulada
+    if order.estado == OrdenCompra.EstadosFactura.ANULADA:
+        draw_watermark(c, "ANULADA", width, height)
 
     c.save()
