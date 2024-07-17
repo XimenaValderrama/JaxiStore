@@ -195,7 +195,7 @@ def rectificar_factura(request, order_id):
         factura.total_pagar=total_pagar
         factura.forma_pago=forma_pago
         factura.fecha_entrega=fecha_entrega
-        factura.estado = "Rectificada"
+        factura.estado = "RE"
         
         factura.save()
 
@@ -226,6 +226,7 @@ def rectificar_factura(request, order_id):
     }
 
     return render(request, "rectificar_factura.html", contexto)
+
 
 @login_required(login_url="login")
 def entrega_factura(request, order_id):
